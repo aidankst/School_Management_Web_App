@@ -1,6 +1,7 @@
 from app import *
 from flask import Blueprint, request, flash
 from sqlalchemy import asc
+from emails import *
 
 course_bp = Blueprint('course_management', __name__)
 
@@ -117,6 +118,7 @@ def register_student_in_course():
                 if not course in student.courses.all():
                     student.courses.append(course)
                     db.session.commit()
+                    course_registration_email(user.email, user.name, course.name, course.start_date.strftime("%Y-%m-%d"), course.fees)
                     flash('Student registered in course.', 'success')
                 else:
                     flash('Student already registered in course.', 'danger')

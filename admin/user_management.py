@@ -127,6 +127,7 @@ def approve(user_id):
     user.is_verified = True
     user.status = 'active'
     db.session.commit()
+    approval_email(user.email, user.name, user.id)
     flash('User approved!', 'success')
     return redirect('/admin/user_management')
 

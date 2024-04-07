@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 from app import *
 from flask import Blueprint, render_template, request, flash
 from sqlalchemy import asc, extract
+from emails import *
 
 payment_bp = Blueprint('payments', __name__)
 
@@ -65,6 +66,7 @@ def invoice():
                                     student.invoices.append(new_invoice)
                                     course.invoices.append(new_invoice)
                                     db.session.commit()
+                                    invoice_email(user.email, user.name, course.name, course.fees, data['fees'], month.strftime('%B'), course.start_date.strftime("%Y-%m-%d"), data['attending_days'], invoice_id)
                                     flash(f'Invoice for {course.name} created.', 'info')
                                 else:
                                     flash(f'Student has not registered yet in {month}, {year}', 'danger')
@@ -151,6 +153,7 @@ def pay_invoice(invoice_id):
                 student.payments.append(payment)
 
                 db.session.commit()
+                record_payment_email(user.email, user.name, invoice.id, invoice.amount, invoice.attending_days)
                 flash(f'Invoice {invoice.id} paid.', 'info')
             else:
                 flash(f'Invoice {invoice.id} already paid.', 'danger')

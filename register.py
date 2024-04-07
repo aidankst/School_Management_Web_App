@@ -1,5 +1,6 @@
 from app import *
 from flask import render_template, request, redirect, url_for, flash
+from emails import registration_email
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -17,6 +18,7 @@ def register():
             user = User(id=user_id, name=name, email=email, password=User.create_password(password), role=role, phone=phone, is_verified=False, status='pending')
             db.session.add(user)
             db.session.commit()
+            registration_email(email, name, user_id)
             flash('You have successfully registered', 'success')
         else:
             flash('Email already exists', 'danger')
