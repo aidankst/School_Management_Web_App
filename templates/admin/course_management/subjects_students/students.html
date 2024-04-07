@@ -1,0 +1,27 @@
+<div class="row">
+    {% if courses %}
+        <h3>Students</h3>
+        {% for course in courses %}
+            {% if course.status == 'active' %}
+                <div class="col-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="card-title"><h5>{{ course.name }}</h5></div>
+                            {% if course.students %}
+                                {% for student in course.students %}
+                                    {% for user in users %}
+                                        {% if user.id == student.id %}
+                                            <p>{{ user.name }}</p>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endfor %}
+                            {% else %}
+                            <p>No Students Registered!</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+</div>

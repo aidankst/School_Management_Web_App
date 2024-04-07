@@ -1,0 +1,283 @@
+
+/* --- admin_dashboard --- */
+
+/* Importing Google font - Poppins */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    height: 100vh;
+    width: 100%;
+    background-image: url("/static/images/hero-bg.jpg");
+    background-position: center;
+    background-size: cover;
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 110px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(17px);
+    --webkit-backdrop-filter: blur(17px);
+    border-right: 1px solid rgba(255, 255, 255, 0.7);
+    transition: width 0.3s ease;
+}
+
+.sidebar:hover {
+    width: 300px;
+}
+
+.sidebar .logo {
+    color: #000;
+    display: flex;
+    align-items: center;
+    padding: 25px 10px 15px;
+}
+
+.sidebar ul {
+    margin: 0 !important;
+    padding: 0 !important;
+    list-style-type: none; /* Optionally removes bullet points */
+}
+
+.logo img {
+    width: 100px;
+    border-radius: 50%;
+}
+
+.logo h2 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-left: 15px;
+    display: none;
+}
+
+.sidebar:hover .logo h2 {
+    display: block;
+}
+
+.sidebar .links {
+    list-style: none;
+    margin-top: 20px;
+    overflow-y: auto;
+    scrollbar-width: none;
+    height: calc(100% - 140px);
+}
+
+.sidebar .links::-webkit-scrollbar {
+    display: none;
+}
+
+.links li {
+    display: flex;
+    border-radius: 4px;
+    align-items: center;
+}
+
+.links li:hover {
+    cursor: pointer;
+    background: #fff;
+}
+
+.links h5 {
+    color: #222;
+    font-weight: 500;
+    display: none;
+    margin-bottom: 10px;
+}
+
+.sidebar:hover .links h5 {
+    display: block;
+}
+
+.links hr {
+    margin: 10px 8px;
+    border: 1px solid #4c4c4c;
+}
+
+.sidebar:hover .links hr {
+    border-color: transparent;
+}
+
+.links li span {
+    padding: 12px 10px;
+}
+
+.links li a {
+    padding: 10px;
+    color: #000;
+    display: none;
+    font-weight: 500;
+    white-space: nowrap;
+    text-decoration: none;
+}
+
+.sidebar:hover .links li a {
+    display: block;
+}
+
+.links .logout-link {
+    margin-top: 10px;
+}
+
+
+.dashboard-container {
+    display: flex;
+    min-height: 100vh; /* Make sure it fills at least the whole viewport height */
+}
+
+.content {
+    margin-left: 110px; /* Space for the sidebar */
+    transition: margin-left 0.3s ease; /* Smooth transition if sidebar width changes */
+    flex-grow: 1; /* Allows the content area to take up the remaining space */
+    padding: 20px; /* Adjust padding for content spacing */
+    background-color: #f9f9f9; /* Light background for the content area */
+    overflow-y: auto; /* Add scroll to content area if content overflows */
+}
+/* Optionally, if you keep the expanding sidebar: */
+.sidebar:hover + .content {
+    margin-left: 300px; /* Adjust content margin when sidebar is expanded */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100px; /* Reduced width on small screens or use 'display: none;' to hide */
+        position: relative; /* Consider changing to 'relative' or adjust as needed */
+    }
+
+    .content {
+        margin-left: 100px; /* Adjust to match the new sidebar width or set to 0 if sidebar is hidden */
+    }
+
+    /* Adjust or hide text and icons appropriately */
+    .sidebar:hover .logo h2,
+    .sidebar .links li a {
+        display: inline-block; /* Adjust display as needed or hide elements */
+    }
+
+    /* Additional adjustments for smaller screens */
+    .sidebar, .content {
+        width: 100%; /* Full width for both sidebar and content on very small screens */
+        margin-left: 0; /* No margin needed if sidebar is above content */
+        flex-direction: column; /* Stack vertically */
+    }
+}
+
+
+
+
+
+
+#user_management div.row, 
+#course_management div.row,
+#payments div.row {
+    margin-top: 30px;
+}
+
+#show_payments div.container-fluid {
+    margin-top: 100px;
+}
+
+#user_management div.row h3,
+#course_management div.row h3, 
+#edit_user h3,
+#edit_course h3,
+#payments h3,
+#show_payments h3 {
+    text-align: center;
+    margin: 20px 0 20px 0;
+}
+
+#user_management div.row h5,
+#course_management div.row h5,
+#payments div.row h5 {
+    text-align: center;
+    margin: 0 0 15px 0;
+}
+
+#user_management div.col-6.col-sm-12,
+#course_management div.col-6.col-sm-12,
+#payments div.col-6.col-sm-12 {
+    width: 50%;
+    padding: 0 50px;
+}
+
+#user_management div.card,
+#course_management div.card,
+#payments div.card,
+#show_payments div.card {
+    border-radius: 20px;
+    padding: 20px;
+    margin: 20px;
+}
+
+
+
+#error_message {
+    text-align: center;
+    margin: 5px;
+    padding: 10px;
+}
+
+
+
+#edit_user div.container {
+    margin-top: 60px;
+    width: 450px;
+}
+/* #edit_user table thead tr th, #edit_user table tbody tr td, #table{
+    text-align: center;
+    border-radius: 10px;
+} */
+
+th, td{
+    text-align: center;
+    border-radius: 10px;
+    padding: 10px !important;
+}
+
+
+
+
+#edit_course div.container {
+    margin-top: 140px;
+    width: 450px;
+}
+
+
+
+/* #payments div.container-fluid {
+    width: 450px;
+} */
+
+#coming_soon .logo-container {
+    display: flex;
+    justify-content: center;
+}
+
+#coming_soon img {
+    width: auto;
+    height: 120px;
+}
+
+#coming_soon h1 {
+    text-align: center;
+    margin-top: 180px;
+}
+
+#coming_soon .copyright {
+    text-align: center;
+}

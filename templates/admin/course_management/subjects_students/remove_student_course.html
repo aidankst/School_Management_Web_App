@@ -1,0 +1,24 @@
+<body>
+    <div class="card">
+        <div class="card-body">
+            <div class="card-title"><h5>Remove Student from Course</h5></div>
+            <form method="get" action="/admin/remove_student_from_course" id="remove_student_from_course_form" validate>
+                <div class="form-floating mt-1 mb-3">
+                    <input type="number" class="form-control" id="idInput" placeholder="<Student ID>" name="student_id" required>
+                    <label for="idInput">User ID</label>
+                </div>
+                <div class="form-control mt-4 mb-3">
+                    <label for="course_id">Select Course</label>
+                    <select class="form-select" name="course_id">
+                        {% for course in courses %}
+                        <option value="{{ course.id }}">{{ course.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="d-flex justify-content-center align-items-center" id="remove_student_button">
+                    <button type="submit" class="w-50 btn btn-md btn-danger">Remove</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>

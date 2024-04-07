@@ -1,0 +1,67 @@
+{% extends '/admin/template.html' %}
+
+{% block content %}
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+    {% for category, message in messages %}
+        <div class="alert alert-{{ category }}" style="text-align: center; font-size: large;">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+{% endwith %}
+
+<body id="edit_course">
+    <div class="container">
+        <h3>Edit Course</h3>
+        <form method="post" action="/admin/change_course_data" id="edit_course_form" validate>
+            <input type="hidden" name="course_id" value="{{ course.id }}">
+            <div class="form-floating mt-1 mb-3">
+                <input type="text" class="form-control" id="nameInput" placeholder="<Name>" name="name" required value="{{ course.name }}">
+                <label for="nameInput">Course Name</label>
+            </div>
+            <div class="form-floating mt-4 mb-3">
+                <input type="date" class="form-control" id="startDateInput" placeholder="<Start_date>" name="start_date" required value="{{ start_date }}">
+                <label for="startDateInput">Starting Date</label>
+            </div>
+            <div class="form-floating mt-4 mb-3">
+                <input type="date" class="form-control" id="endDateInput" placeholder="<End_date>" name="end_date" {% if end_date %} required {% endif %} value="{{ end_date }}">
+                <label for="endDateInput">Ending Date</label>
+            </div>
+            <div class="form-floating mt-4 mb-3">
+                <input type="text" class="form-control" id="descriptionInput" placeholder="<Description>" name="description" value="{{ course.description }}">
+                <label for="descriptionInput">Description</label>
+            </div>
+            <div class="form-floating mt-4 mb-3">
+                <input type="number" class="form-control" id="feesInput" placeholder="<Fees>" name="fees" required value="{{ course.fees }}">
+                <label for="feesInput">Fees</label>
+            </div>
+
+            <div class="row">
+                <div class="col-5">
+                    <div class="d-flex justify-content-center align-items-center" id="submitBtn">
+                        <a href="/admin/course_management" class="w-75 btn btn-md btn-primary">Back</a>
+                    </div>
+                </div>
+                <div class="col-7">
+                    <div class="d-flex justify-content-center align-items-center" id="edit_course_button">
+                        <button type="submit" class="w-75 btn btn-md btn-primary">Edit Course</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('edit_course_form').onsubmit = function() {
+            var submitButton = document.getElementById('edit_course_button');
+            if (submitButton) {
+                submitButton.disabled = true;
+                submitButton.textContent = 'Editing ...';
+            }
+        };
+    </script>
+</body>
+
+{% endblock %}

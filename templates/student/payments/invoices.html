@@ -1,0 +1,125 @@
+{% extends '/student/index/template.html' %}
+
+{% block content %}
+
+<body>
+    <div class="container-fluid" id="invoice-container">
+        {% if invoices %}
+            <h3>All Invoices</h3>
+                <div class="row">
+                    <div class="container-fluid">
+                        <div class="card">
+                            <div class="card-title"> <h5>Unpaid Invoices</h5></div>
+                            <div class="card-body">
+                                <div class="row">
+                                    {% for invoice in invoices %}
+                                        {% if invoice.status == 'unpaid' %}
+                                        <div class="col-4">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <div class="card-title"><h5>{{ invoice.id }}</h5></div>
+                                                    <table class="table">
+                                                        <tbody>
+                                                            {% for course in courses %}
+                                                                {% if course.id == invoice.course_id %}
+                                                                    <tr>
+                                                                        <th style="text-align: left;">Course</th>
+                                                                        <td style="text-align: left;">{{ course.name }}</td>
+                                                                    </tr>
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                            <tr>
+                                                                <th style="text-align: left;">Issuer</th>
+                                                                <td style="text-align: left;">{{ invoice.issuer }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th style="text-align: left;">Amount</th>
+                                                                <td style="text-align: left;">{{ "{:,.2f}".format(invoice.amount) }} MMK</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th style="text-align: left;">Date</th>
+                                                                <td style="text-align: left;">{{ invoice.date.strftime('%Y-%m-%d') }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th style="text-align: left;">Deadline</th>
+                                                                <td style="text-align: left;">{{ invoice.deadline.strftime('%Y-%m-%d') }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th style="text-align: left;">Status</th>
+                                                                <td {% if invoice.status == 'paid' %} class="bg-success text-white" {% elif invoice.status == 'unpaid' %} class="bg-danger text-white" {% endif %}>{{ invoice.status.capitalize() }}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="container-fluid">
+                        <div class="card">
+                            <div class="card-title"><h5>Paid Invoices</h5></div>
+                            <div class="card-body">
+                                <div class="row">
+                                    {% for invoice in invoices %}
+                                        {% if invoice.status == 'paid' %}
+                                            <div class="col-4">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <div class="card-title"><h5>{{ invoice.id }}</h5></div>
+                                                        <table class="table">
+                                                            <tbody>
+                                                                {% for course in courses %}
+                                                                    {% if course.id == invoice.course_id %}
+                                                                        <tr>
+                                                                            <th style="text-align: left;">Course</th>
+                                                                            <td style="text-align: left;">{{ course.name }}</td>
+                                                                        </tr>
+                                                                    {% endif %}
+                                                                {% endfor %}
+                                                                <tr>
+                                                                    <th style="text-align: left;">Issuer</th>
+                                                                    <td style="text-align: left;">{{ invoice.issuer }}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th style="text-align: left;">Amount</th>
+                                                                    <td style="text-align: left;">{{ "{:,.2f}".format(invoice.amount) }} MMK</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th style="text-align: left;">Date</th>
+                                                                    <td style="text-align: left;">{{ invoice.date.strftime('%Y-%m-%d') }}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th style="text-align: left;">Deadline</th>
+                                                                    <td style="text-align: left;">{{ invoice.deadline.strftime('%Y-%m-%d') }}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th style="text-align: left;">Status</th>
+                                                                    <td {% if invoice.status == 'paid' %} class="bg-success text-white" {% elif invoice.status == 'unpaid' %} class="bg-danger text-white" {% endif %}>{{ invoice.status.capitalize() }}</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        {% else %}
+        <div class="row">
+            <h3>No invoices issued yet!</h3>
+        </div>
+        {% endif %}
+    </div>
+</body>
+
+{% endblock %}

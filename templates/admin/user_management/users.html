@@ -1,0 +1,52 @@
+<body id="users">
+    <div class="container-fluid">
+        <h3>All Users</h3>
+        <div class="card">
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">User ID</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Role</th>
+                            <th scope="col">Phone</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Start Date</th>
+                            <th scope="col">End Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if users %}
+                            {% for user in users %}
+                                <tr>
+                                    <td>{{ user.id }}</td>
+                                    <td>{{ user.name }}</td>
+                                    <td>{{ user.email }}</td>
+                                    <td>{{ user.role.capitalize() }}</td>
+                                    <td>{{ user.phone }}</td>
+                                    <td {% if user.status == 'active' %} class="bg-success text-white" {% elif user.status == 'pending' %} class="bg-warning text-black" {% else %} class="bg-danger text-white" {% endif %}>{{ user.status.capitalize() }}</td>
+
+                                    {% if user.start_date %}
+                                    <td>{{ user.start_date.strftime('%Y-%m-%d') }}</td>
+                                    {% else %}
+                                    <td>{{ user.start_date }}</td>
+                                    {% endif %}
+
+                                    {% if user.end_date %}
+                                    <td>{{ user.end_date.strftime('%Y-%m-%d') }}</td>
+                                    {% else %}
+                                    <td>{{ user.end_date }}</td>
+                                    {% endif %}
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="8" style="text-align: center;">No pending users</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>

@@ -1,0 +1,66 @@
+{% extends "/admin/template.html" %}
+
+{% block content %}
+
+<body id="show_payments">
+    <div class="container-fluid">
+        <h3>Invoices for {{ course.name }} in {{ datetime(year, month, 1).strftime('%B') }}, {{ year }}</h3>
+        <div class="card">
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Invoice ID</th>
+                            <th scope="col">Student ID</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Issuer</th>
+                            <th scope="col">Attending Days</th>
+                            <th scope="col">Amount</th>
+                            <th scope="col">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if invoices %}
+                            {% for invoice in invoices %}
+                                {% if invoice.date.month == month and invoice.date.year == year %}
+                                    <tr>
+                                        <td>{{ invoice['id'] }}</td>
+                                        <td>{{ invoice.student_id }}</td>
+                                        <td>{{ invoice.date.strftime('%Y-%m-%d') }}</td>
+                                        <td>{{ invoice.issuer }}</td>
+                                        <td>{{ invoice.attending_days }}</td>
+                                        <td>{{ "{:,.2f}".format(invoice.amount) }} MMK</td>
+                                        <td {% if invoice.status == 'paid' %} class="bg-success text-white" {% elif invoice.status == 'unpaid' %} class="bg-danger text-white" {% endif %}>{{ invoice.status.capitalize() }}</td>
+                                    </tr>
+                                {% else %}
+                                    <tr>
+                                        <td colspan="8" style="text-align: center;">No invoices registered!</td>
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="8" style="text-align: center;">No invoices registered!</td>
+                            </tr>
+                        {% endif %}
+                        <tr>
+                            {% if total_amount %}
+                            <td colspan="5" style='text-align: right;'>Total Amount :</td>
+                            <td>{{ "{:,.2f}".format(total_amount) }} MMK</td>
+                            {% else %}
+                            <td colspan="6" class="text-right"></td>
+                            {% endif %}
+                            <td>
+                                <div class="d-flex justify-content-center align-items-center" id="submitBtn">
+                                    <a href="/admin/payments" class="w-75 btn btn-md btn-primary">Back</a>
+                                </div>  
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends '/student/index/template.html' %}
+
+{% block content %}
+
+<body>
+    <div class="container" id="account-container">
+        <div class="card">
+            <div class="card-title">
+                <h3>Personal Details</h3>
+                <p class="text-danger">--- Please contact the admins to change the data. ---</p>
+            </div>
+            <div class="card-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-4">
+                            <h6>Student ID :</h6>
+                        </div>
+                        <div class="col-8">
+                            <h5>{{ current_user.id }}</h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <h6>Name :</h6>
+                        </div>
+                        <div class="col-8">
+                            <h5>{{ current_user.name }}</h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <h6>Email :</h6>
+                        </div>
+                        <div class="col-8">
+                            <h5>{{ current_user.email }}</h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <h6>Phone :</h6>
+                        </div>
+                        <div class="col-8">
+                            <h5>{{ current_user.phone }}</h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <h6>Start Date :</h6>
+                        </div>
+                        <div class="col-8">
+                            <h5>{{ current_user.start_date.strftime('%Y-%m-%d') }}</h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <h6>Status :</h6>
+                        </div>
+                        <div class="col-8">
+                            <div class="container">
+                                <h5 {% if current_user.status == 'active' %} class="text-success" {% else %} class="text-danger" {% endif %}>{{ current_user.status.capitalize() }}</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+{% endblock %}

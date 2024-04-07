@@ -1,0 +1,44 @@
+{% extends '/admin/template.html' %}
+
+{% block content %}
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+    {% for category, message in messages %}
+        <div class="alert alert-{{ category }}" style="text-align: center; font-size: large;">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+{% endwith %}
+
+<body id="course_management">
+    <div class="row">
+        <h3><span class="material-symbols-outlined">history_edu</span> Course Management</h3>
+    </div>
+
+    <div class="row">
+        <div class="col-6 col-sm-12">
+            {% include '/admin/course_management/add_new_course.html' %}
+        </div>
+        <div class="col-6 col-sm-12">
+            {% include '/admin/course_management/find_suspend_course.html' %}
+        </div>
+    </div>
+
+    {% include '/admin/course_management/subjects_students/manage.html' %}
+
+    <div class="row">
+        {% include '/admin/course_management/courses.html' %}
+    </div>
+
+    <div>
+        {% include '/admin/course_management/subjects_students/subjects.html' %}
+    </div>
+
+    <div>
+        {% include '/admin/course_management/subjects_students/students.html' %}
+    </div>
+</body>
+
+{% endblock %}

@@ -1,0 +1,53 @@
+<div class="card">
+    <div class="card-body">
+        <div class="card-title"><h5>Check Payments</h5></div>
+        <div class="container-fluid">
+            <form action="/admin/check_payments" method="get" id="check_payments_form" validate>
+                <div class="form-control mt-4 mb-3">
+                    <label for="course_id">Select Course</label>
+                    <select class="form-select" name="course_id">
+                        {% for course in courses %}
+                        <option value="{{ course.id }}">{{ course.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-control mt-4 mb-3">
+                    <label for="month_name">Select Month</label>
+                    <select class="form-select" id="month_name" name="month_name">
+                        {% for key, value in months.items() %}
+                            {% if value == datetime.now().strftime('%B') %}
+                                <option value="{{ key }}" selected>{{ value }}</option>
+                            {% else %}
+                                <option value="{{ key }}">{{ value }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-control mb-3">
+                    <label for="year">Select Year</label>
+                    <select class="form-select" id="year" name="year">
+                        {% for year in range(2023, 2030) %}
+                            {% if year == datetime.now().year %}
+                                <option value="{{ year }}" selected>{{ year }}</option>
+                            {% else %}
+                                <option value="{{ year }}">{{ year }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="d-flex justify-content-center align-items-center" id="check_payments_button">
+                    <button type="submit" class="w-50 btn btn-md btn-primary">Check</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        document.getElementById('check_payments_form').onsubmit = function() {
+            var submitButton = document.getElementById('check_payments_button');
+            if (submitButton) {
+                submitButton.disabled = true;
+                submitButton.textContent = 'Checking ...';
+            }
+        };
+    </script>
+</div>

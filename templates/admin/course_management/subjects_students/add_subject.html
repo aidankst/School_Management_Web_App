@@ -1,0 +1,28 @@
+<body>
+    <div class="card">
+        <div class="card-body">
+            <div class="card-title"><h5>Add New Subject</h5></div>
+            <form method="get" action="/admin/add_subject" id="add_subject_form" validate>
+                <div class="form-floating mt-1 mb-3">
+                    <input type="text" class="form-control" id="subjectNameInput" placeholder="<Subject Name>" name="subject_name" required>
+                    <label for="subjectNameInput">Subject Name</label>
+                </div>
+                <div class="form-control mt-4 mb-3">
+                    <label for="course_id">Select Course</label>
+                    <select class="form-select" name="course_id">
+                        {% for course in courses %}
+                        <option value="{{ course.id }}">{{ course.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-floating mt-4 mb-3">
+                    <input type="text" class="form-control" id="descriptionInput" placeholder="<Description>" name="description">
+                    <label for="descriptionInput">Description</label>
+                </div>
+                <div class="d-flex justify-content-center align-items-center" id="add_subject_button">
+                    <button type="submit" class="w-50 btn btn-md btn-primary">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>

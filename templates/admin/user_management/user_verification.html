@@ -1,0 +1,67 @@
+<body id="user_verification">
+    <div class="container-fluid">
+        <h3>Pending Users</h3>
+        <div class="card">
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">User ID</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Role</th>
+                            <th scope="col">Phone</th>
+                            <th scope="col">Status</th>
+                            <th colspan="2" scope="col" style="text-align: center;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if pending_users %}
+                            {% for user in pending_users %}
+                                <tr>
+                                    <td>{{ user.id }}</td>
+                                    <td>{{ user.name }}</td>
+                                    <td>{{ user.email }}</td>
+                                    <td>{{ user.role.capitalize() }}</td>
+                                    <td>{{ user.phone }}</td>
+                                    <td {% if user.status == 'active' %} class="bg-success text-white" {% elif user.status == 'pending' %} class="bg-warning text-black" {% else %} class="bg-danger text-white" {% endif %}>{{ user.status.capitalize() }}</td>
+                                    <td class="button-td">
+                                        <form action="/admin/approve/{{ user.id }}" method="POST" id="approve_form">
+                                            <button type="submit" class="w-100 h-100 btn btn-sm btn-success" id="approve_button">Approve</button>
+                                        </form>
+                                    </td>
+                                    <td class="button-td">
+                                        <form action="/admin/decline/{{ user.id }}" method="POST" id="decline_form">
+                                            <button type="submit" class="w-75 btn btn-sm btn-danger" id="decline_button">Decline</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="7" style="text-align: center;">No pending users</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        document.getElementById('approve_form').onsubmit = function() {
+            var submitButton = document.getElementById('approve_button');
+            if (submitButton) {
+                submitButton.disabled = true;
+                submitButton.textContent = 'Approving User ...';
+            }
+        };
+        document.getElementById('decline_form').onsubmit = function() {
+            var submitButton = document.getElementById('decline_button');
+            if (submitButton) {
+                submitButton.disabled = true;
+                submitButton.textContent = 'Declining User ...';
+            }
+        };
+    </script>
+</body>

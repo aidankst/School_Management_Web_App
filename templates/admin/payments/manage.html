@@ -1,0 +1,35 @@
+{% extends '/admin/template.html' %}
+
+{% block content %}
+
+<body id="payments">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}" style="text-align: center; font-size: large;">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <div class="row">
+        <h3>Payments</h3>
+    </div>
+
+    <div class="row">
+        <div class="col-6 col-sm-12">
+            {% include '/admin/payments/invoice.html' %}
+        </div>
+        <div class="col-6 col-sm-12">
+            {% include '/admin/payments/check_payments.html' %}
+        </div>
+    </div>
+
+    <div class="row">
+        {% include '/admin/payments/invoices.html' %}
+    </div>
+
+</body>
+
+{% endblock %}

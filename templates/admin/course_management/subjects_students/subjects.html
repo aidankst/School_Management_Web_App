@@ -1,0 +1,23 @@
+<div class="row">
+    {% if subjects %}
+        <h3>Subjects</h3>
+        {% for course in courses %}
+            {% if course.status == 'active' %}
+                <div class="col-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="card-title"><h5>{{ course.name }}</h5></div>
+                            {% if course.subjects %}
+                                {% for subject in course.subjects %}
+                                    <p>{{ subject.name }}</p>
+                                {% endfor %}
+                            {% else %}
+                            <p>No Subjects Registered!</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+</div>

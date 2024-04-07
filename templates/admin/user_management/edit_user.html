@@ -1,0 +1,94 @@
+{% extends "/admin/template.html" %}
+
+{% block content %}
+<body id="edit_user">
+    <div class="container">
+        <h3>Edit User</h3>
+        <form method="post" action="/admin/change_user_data" validate id="edit_user_form">
+            <div class="form-floating mt-1 mb-3">
+                <input type="text" class="form-control" id="idInput" placeholder="<User ID>" name="user_id" readonly value="{{ user.id }}">
+                <label for="idInput">User ID</label>
+            </div>
+            <div class="form-floating mt-4 mb-3">
+                <input type="text" class="form-control" id="nameInput" placeholder="<NAME>" name="name" value="{{ user.name }}">
+                <label for="nameInput">Name</label>
+            </div>
+            <div class="form-floating mt-4 mb-3">
+                <input type="email" class="form-control" id="emailInput" placeholder="<EMAIL>" name="email" required value="{{ user.email }}">
+                <label for="emailInput">Email Address</label>
+            </div>
+            <div class="form-floating mt-4 mb-3">
+                <input type="text" class="form-control" id="roleInput" placeholder="<ROLE>" name="role" readonly value="{{ user.role.capitalize() }}">
+                <label for="roleInput">Role</label>
+            </div>
+            <div class="form-floating mt-4 mb-3">
+                <input type="text" class="form-control" id="phoneInput" placeholder="<Phone>" name="phone" required value="{{ user.phone }}">
+                <label for="phoneInput">Phone</label>
+            </div>
+            {% if user.role == 'employee' %}
+                <div class="form-floating mt-4 mb-3">
+                    <input type="number" class="form-control" id="salaryInput" placeholder="<Salary>" name="salary" required value="{{ employee.salary }}">
+                    <label for="salaryInput">Salary</label>
+                </div>
+            {% elif user.role == 'student' %}
+                <div class="form-floating mt-4 mb-3">
+                    <input type="text" class="form-control" id="fatherNameInput" placeholder="<Father Name>" name="father_name" required value="{{ student.father_name }}">
+                    <label for="fatherNameInput">Father Name</label>
+                </div>
+                <div class="form-floating mt-4 mb-3">
+                    <input type="text" class="form-control" id="motherNameInput" placeholder="<Mother Name>" name="mother_name" required value="{{ student.mother_name }}">
+                    <label for="motherNameInput">Mother Name</label>
+                </div>
+            {% endif %}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Status</th>
+                        <th scope="col">Start Date</th>
+                        <th scope="col">End Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td {% if user.status == 'active' %} class="bg-success text-white" {% elif user.status == 'pending' %} class="bg-warning text-black" {% else %} class="bg-danger text-white" {% endif %}>{{ user.status.capitalize() }}</td>
+
+                        {% if user.start_date %}
+                        <td>{{ user.start_date.strftime('%Y-%m-%d') }}</td>
+                        {% else %}
+                        <td>{{ user.start_date }}</td>
+                        {% endif %}
+
+                        {% if user.end_date %}
+                        <td>{{ user.end_date.strftime('%Y-%m-%d') }}</td>
+                        {% else %}
+                        <td>{{ user.end_date }}</td>
+                        {% endif %}
+                    </tr>
+                </tbody>
+            </table>
+            <div class="row">
+                <div class="col-5">
+                    <div class="d-flex justify-content-center align-items-center" id="submitBtn">
+                        <a href="/admin/user_management" class="w-75 btn btn-md btn-primary">Back</a>
+                    </div>
+                </div>
+                <div class="col-7">
+                    <div class="d-flex justify-content-center align-items-center" id="edit_user_button">
+                        <button type="submit" class="w-100 btn btn-md btn-primary">Change Data</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('edit_user_form').onsubmit = function() {
+            var submitButton = document.getElementById('edit_user_button');
+            if (submitButton) {
+                submitButton.disabled = true;
+                submitButton.textContent = 'Changing Data ...';
+            }
+        };
+    </script>
+</body>
+{% endblock %}

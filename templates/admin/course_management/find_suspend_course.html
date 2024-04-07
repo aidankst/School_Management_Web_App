@@ -1,0 +1,57 @@
+<div>
+    <div class="card">
+        <div class="card-body">
+            <div class="card-title">
+                <h5>Find Course</h5>
+            </div>
+            <div class="container-fluid">
+                <form method="get" action="/admin/edit_course" id="find_new_course_form" validate>
+                    <div class="form-floating mt-1 mb-3">
+                        <input type="text" class="form-control" id="nameInput" placeholder="<Name>" name="name" required>
+                        <label for="nameInput">Course Name</label>
+                    </div>
+                    <div class="d-flex justify-content-center align-items-center" id="find_course_button">
+                        <button type="submit" class="w-50 btn btn-md btn-primary">Find Course</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <div class="card">
+        <div class="card-body">
+            <div class="card-title">
+                <h5>Suspend Course</h5>
+            </div>
+            <div class="container-fluid">
+                <form method="get" action="/admin/suspend_course" id="suspend_course_form" validate>
+                    <div class="form-floating mt-1 mb-3">
+                        <input type="text" class="form-control" id="nameInput" placeholder="<Name>" name="name" required>
+                        <label for="nameInput">Course Name</label>
+                    </div>
+                    <div class="d-flex justify-content-center align-items-center" id="suspend_course_button">
+                        <button type="submit" class="w-50 btn btn-md btn-danger">Suspend Course</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('find_new_course_form').onsubmit = function() {
+        var submitButton = document.getElementById('find_course_button');
+        if (submitButton) {
+            submitButton.disabled = true;
+            submitButton.textContent = 'Finding ...';
+        }
+    };
+    document.getElementById('suspend_course_form').onsubmit = function() {
+        var submitButton = document.getElementById('suspend_course_button');
+        if (submitButton) {
+            submitButton.disabled = true;
+            submitButton.textContent = 'Suspending ...';
+        }
+    };
+</script>

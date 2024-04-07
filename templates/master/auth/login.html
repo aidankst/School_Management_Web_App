@@ -1,0 +1,50 @@
+{% extends "/master/index/template.html" %}
+
+{% block content %}
+
+<body id="login">
+    <div class="container">
+        <h1>Login</h1>
+        <div class="container-fluid">
+            <form action="{{ url_for('login') }}" method="post" id="login_form" validate>
+                <div class="form-floating mt-1 mb-3">
+                    <input type="email" class="form-control" id="emailInput" placeholder="<EMAIL>" name="email" required>
+                    <label for="emailInput">Email address</label>
+                </div>
+                <div class="form-floating mt-4 mb-3">
+                    <input type="password" class="form-control" id="passwordInput" placeholder="<Password>" name="password" required>
+                    <label for="passwordInput">Password</label>
+                </div>
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}" style="text-align: center; font-size: large;">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                {% endif %}
+                {% endwith %}
+                <div class="d-flex justify-content-center align-items-center" id="login_button">
+                    <button type="submit" class="w-50 btn btn-lg btn-primary mt-1">Login</button>
+                </div>
+            </form>
+            <div class="d-flex justify-content-center align-items-center">
+                <a class="text-secondary">Forgot your password?</a>
+                <a href="/register">Don't have an account?</a>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        document.getElementById('login_form').onsubmit = function() {
+            var submitButton = document.getElementById('login_button');
+            if (submitButton) {
+                submitButton.disabled = true;
+                submitButton.textContent = 'Logging User ...';
+            }
+        };
+    </script>
+</body>
+
+
+{% endblock %}

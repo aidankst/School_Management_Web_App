@@ -1,0 +1,117 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+
+
+div.row div.col-3 div.card {
+    padding: 20x;
+    margin: 20px;
+    border-radius: 15px;
+}
+
+div.row div.col-3 div.card .card-body {
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+div.row div.col-3 div.card .card-body h3 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+div.row div.col-3 div.card .card-body h4 {
+    margin-bottom: 20px;
+}
+
+.links {
+    list-style: none;
+    margin-top: 20px;
+    overflow-y: auto;
+    scrollbar-width: none;
+    height: calc(100% - 140px);
+}
+
+.links li {
+    width: 100px;
+    display: flex;
+    border-radius: 5px;
+    align-items: center;
+}
+
+.links li a {
+    padding: 10px;
+    color: #000;
+    font-weight: 500;
+    white-space: nowrap;
+    text-decoration: none;
+}
+
+.links h5 {
+    color: #222;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.links hr {
+    margin: 10px 8px;
+    border: 1px solid #4c4c4c;
+}
+
+
+
+
+
+#course-container,
+#invoice-container {
+    margin-top: 100px;
+    margin-bottom: 30px;
+}
+
+#course-container h3,
+#invoice-container h3,
+#invoice-container h5,
+#account-container h3,
+#account-container p {
+    margin-top: 15px;
+    text-align: center;
+}
+
+#course-container div.card,
+#account-container div.card {
+    border-radius: 20px;
+    padding: 20px;
+    margin: 20px;
+}
+
+#invoice-container div.card {
+    border-radius: 20px;
+    padding: 10px;
+    margin: 10px;
+}
+
+
+#account-container {
+    width: 800px;
+    height: auto;
+    margin-top: 50px;
+    margin-bottom: 30px;
+}
+#account-container div.row {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+#account-container h6 {
+    text-align: right;
+}
+#account-container h5 {
+    text-align: left;
+}
+
+
+
+th, td{
+    text-align: center;
+    border-radius: 10px;
+    padding: 10px !important;
+}

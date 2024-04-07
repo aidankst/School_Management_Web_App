@@ -1,0 +1,50 @@
+<body id="courses">
+    <div class="container-fluid">
+        <h3>All Courses</h3>
+        <div class="card">
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Start Date</th>
+                            <th scope="col">End Date</th>
+                            <th scope="col">Fees</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if courses %}
+                            {% for course in courses %}
+                                <tr>
+                                    <td>{{ course.name }}</td>
+
+                                    {% if course.start_date %}
+                                    <td>{{ course.start_date.strftime('%Y-%m-%d') }}</td>
+                                    {% else %}
+                                    <td>{{ course.start_date }}</td>
+                                    {% endif %}
+
+                                    {% if course.end_date %}
+                                    <td>{{ course.end_date.strftime('%Y-%m-%d') }}</td>
+                                    {% else %}
+                                    <td>{{ course.end_date }}</td>
+                                    {% endif %}
+
+                                    <td>{{ "{:,.2f}".format(course.fees) }} MMK</td>
+                                    <td>{{ course.description }}</td>
+                                    <td {% if course.status == 'active' %} class="bg-success text-white" {% else %} class="bg-danger text-white" {% endif %}>{{ course.status.capitalize() }}</td>
+
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="8" style="text-align: center;">No courses registered!</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>

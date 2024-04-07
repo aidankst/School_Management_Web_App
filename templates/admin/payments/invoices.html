@@ -1,0 +1,140 @@
+<body>
+    <div class="container-fluid">
+        {% if invoices %}
+            <h3>All Invoices Issued in {{ datetime.now().strftime('%B') }}, {{ datetime.now().year }}</h3>
+                <div class="row">
+                    <div class="container-fluid">
+                        <div class="card">
+                            <div class="card-title"> <h5>Unpaid Invoices</h5></div>
+                            <div class="card-body">
+                                {% for invoice in invoices %}
+                                    {% if invoice.status == 'unpaid' %}
+                                    <div class="col-4">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="card-title"><h5>{{ invoice.id }}</h5></div>
+                                                <table class="table">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th style="text-align: left;">Student ID :</th>
+                                                            <td style="text-align: left;">{{ invoice.student_id }}</td>
+                                                        </tr>
+                                                        {% for course in courses %}
+                                                            {% if course.id == invoice.course_id %}
+                                                                <tr>
+                                                                    <th style="text-align: left;">Course ID :</th>
+                                                                    <td style="text-align: left;">{{ course.name }}</td>
+                                                                </tr>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                        <tr>
+                                                            <th style="text-align: left;">Issuer :</th>
+                                                            <td style="text-align: left;">{{ invoice.issuer }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th style="text-align: left;">Amount :</th>
+                                                            <td style="text-align: left;">{{ "{:,.2f}".format(invoice.amount) }} MMK</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th style="text-align: left;">Date :</th>
+                                                            <td style="text-align: left;">{{ invoice.date.strftime('%Y-%m-%d') }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th style="text-align: left;">Deadline :</th>
+                                                            <td style="text-align: left;">{{ invoice.deadline.strftime('%Y-%m-%d') }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th style="text-align: left;">Status :</th>
+                                                            <td {% if invoice.status == 'paid' %} class="bg-success text-white" {% elif invoice.status == 'unpaid' %} class="bg-danger text-white" {% endif %}>{{ invoice.status.capitalize() }}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                               <div class="container-fluid">
+                                                    <form action="/admin/pay_invoice/{{ invoice.id }}" method="POST" id="pay_invoice_form">
+                                                        <div class="d-flex justify-content-center align-items-center" id="pay_invoice_submitBtn">
+                                                            <button type="submit" class="w-50 btn btn-md btn-success">Pay</button>
+                                                        </div>
+                                                    </form>
+                                               </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="container-fluid">
+                        <div class="card">
+                            <div class="card-title"><h5>Paid Invoices</h5></div>
+                            <div class="card-body">
+                                {% for invoice in invoices %}
+                                    {% if invoice.status == 'paid' %}
+                                        <div class="col-4">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <div class="card-title"><h5>{{ invoice.id }}</h5></div>
+                                                    <table class="table">
+                                                        <tbody>
+                                                            <tr>
+                                                                <th style="text-align: left;">Student ID :</th>
+                                                                <td style="text-align: left;">{{ invoice.student_id }}</td>
+                                                            </tr>
+                                                            {% for course in courses %}
+                                                                {% if course.id == invoice.course_id %}
+                                                                    <tr>
+                                                                        <th style="text-align: left;">Course ID :</th>
+                                                                        <td style="text-align: left;">{{ course.name }}</td>
+                                                                    </tr>
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                            <tr>
+                                                                <th style="text-align: left;">Issuer :</th>
+                                                                <td style="text-align: left;">{{ invoice.issuer }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th style="text-align: left;">Amount :</th>
+                                                                <td style="text-align: left;">{{ "{:,.2f}".format(invoice.amount) }} MMK</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th style="text-align: left;">Date :</th>
+                                                                <td style="text-align: left;">{{ invoice.date.strftime('%Y-%m-%d') }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th style="text-align: left;">Deadline :</th>
+                                                                <td style="text-align: left;">{{ invoice.deadline.strftime('%Y-%m-%d') }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th style="text-align: left;">Status :</th>
+                                                                <td {% if invoice.status == 'paid' %} class="bg-success text-white" {% elif invoice.status == 'unpaid' %} class="bg-danger text-white" {% endif %}>{{ invoice.status.capitalize() }}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        {% else %}
+        <div class="row">
+            <h3>No invoices issued yet in {{ datetime.now().strftime('%B') }}, {{ datetime.now().year }}!</h3>
+        </div>
+        {% endif %}
+    </div>
+
+    <script>
+        document.getElementById('pay_invoice_form').onsubmit = function() {
+            var submitButton = document.getElementById('pay_invoice_submitBtn');
+            if (submitButton) {
+                submitButton.disabled = true;
+                submitButton.textContent = 'Recording ...';
+            }
+        };
+    </script>
+</body>
